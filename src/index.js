@@ -1,14 +1,4 @@
-try {
-	var _ = require('underscore');
-} catch (e) {
-	var _ = window._;
-}
-try {
-	var Backbone = require('backbone');
-} catch (e) {
-	var Backbone = window.Backbone;
-}
-var merge = require('lodash.merge');
+var _ = require('lodash');
 
 /**
  * Takes a nested object and returns a shallow object keyed with the path names
@@ -127,7 +117,7 @@ function deleteNested(obj, path) {
 	});
 }
 
-var DeepModel = Backbone.Model.extend({
+var DeepModel = {
 
 	// Override constructor
 	// Support having nested defaults by using _.deepExtend instead of _.extend
@@ -137,7 +127,7 @@ var DeepModel = Backbone.Model.extend({
 		this.attributes = {};
 		if (options && options.collection) this.collection = options.collection;
 		if (options && options.parse) attrs = this.parse(attrs, options) || {};
-    attrs = merge({}, _.result(this, 'defaults'), attrs);
+    attrs = _.merge({}, _.result(this, 'defaults'), attrs);
 		this.set(attrs, options);
 		this.changed = {};
 		this.initialize.apply(this, arguments);
@@ -145,7 +135,7 @@ var DeepModel = Backbone.Model.extend({
 
 	// Return a copy of the model's `attributes` object.
 	toJSON: function(options) {
-		return merge({}, this.attributes);
+		return _.merge({}, this.attributes);
 	},
 
 	// Override get
@@ -181,7 +171,7 @@ var DeepModel = Backbone.Model.extend({
 		this._changing = true;
 
 		if (!changing) {
-			this._previousAttributes = merge({}, this.attributes); //<custom>: Replaced _.clone with _.deepClone
+			this._previousAttributes = _.merge({}, this.attributes); //<custom>: Replaced _.clone with _.deepClone
 			this.changed = {};
 		}
 		current = this.attributes, prev = this._previousAttributes;
@@ -319,9 +309,9 @@ var DeepModel = Backbone.Model.extend({
 	// Get all of the attributes of the model at the time of the previous
 	// `"change"` event.
 	previousAttributes: function() {
-		return merge({}, this._previousAttributes);
+		return _.merge({}, this._previousAttributes);
 	}
-});
+};
 
 //Config; override in your app to customise
 DeepModel.keyPathSeparator = '.';
