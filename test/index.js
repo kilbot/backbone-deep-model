@@ -179,7 +179,7 @@ describe('DeepModel', function() {
 			expect(model.attributes.date).to.be.instanceof(Date);
 		});
 
-    it("set: Updates an array", function() {
+    it("set: Correctly shortens an array", function() {
       var model = new DeepModel({
         id: 123,
         arr: [ 'val1', 'val2' ]
