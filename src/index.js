@@ -194,7 +194,7 @@ var DeepModel = Backbone.Model.extend({
       if(
         _.isArray(this.attributes[attr]) &&
         _.isArray(attrs[attr]) &&
-        this.attributes[attr].length !== attrs[attr].length
+        this.attributes[attr].length > attrs[attr].length
       ){
         this.attributes[attr] = undefined;
       }
