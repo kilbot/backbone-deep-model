@@ -179,5 +179,16 @@ describe('DeepModel', function() {
 			expect(model.attributes.date).to.be.instanceof(Date);
 		});
 
+    it("set: Updates an array", function() {
+      var model = new DeepModel({
+        id: 123,
+        arr: [ 'val1', 'val2' ]
+      });
+      expect(model.attributes.arr).to.deep.equal([ 'val1', 'val2' ]);
+
+      model.set({ arr: [ 'val3' ] });
+      expect(model.attributes.arr).to.deep.equal([ 'val3' ]);
+    });
+
 	});
 });
