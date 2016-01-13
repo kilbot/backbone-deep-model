@@ -189,6 +189,17 @@ var DeepModel = Backbone.Model.extend({
 		// Check for changes of `id`.
 		if (this.idAttribute in attrs) this.id = attrs[this.idAttribute];
 
+    // If attr is array and not of same size, clear first
+    for (attr in attrs) {
+      if(
+        _.isArray(this.attributes[attr]) &&
+        _.isArray(attrs[attr]) &&
+        this.attributes[attr].length !== attrs[attr].length
+      ){
+        this.attributes[attr] = undefined;
+      }
+    }
+
 		//<custom code>
 		attrs = objToPaths(attrs);
 		//</custom code>
