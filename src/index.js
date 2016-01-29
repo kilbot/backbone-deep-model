@@ -179,23 +179,12 @@ var DeepModel = {
 		// Check for changes of `id`.
 		if (this.idAttribute in attrs) this.id = attrs[this.idAttribute];
 
-    // If attr is array and not of same size, clear first
-    for (attr in attrs) {
-      if(
-        _.isArray(this.attributes[attr]) &&
-        _.isArray(attrs[attr]) &&
-        this.attributes[attr].length > attrs[attr].length
-      ){
-        this.attributes[attr] = undefined;
-      }
-    }
-
 		//<custom code>
 		attrs = objToPaths(attrs);
 		//</custom code>
 
-		// For each `set` attribute, update or delete the current value.
-		for (attr in attrs) {
+    // For each `set` attribute, update or delete the current value.
+    for (attr in attrs) {
 			val = attrs[attr];
 
 			//<custom code>: Using getNested, setNested and deleteNested
@@ -207,7 +196,7 @@ var DeepModel = {
 			}
 			unset ? deleteNested(current, attr) : setNested(current, attr, val);
 			//</custom code>
-		}
+    }
 
 		// Trigger all relevant attribute changes.
 		if (!silent) {
@@ -321,7 +310,9 @@ var DeepModel = {
 	// `"change"` event.
 	previousAttributes: function() {
 		return _.merge({}, this._previousAttributes);
-	}
+	},
+
+  objToPaths: objToPaths
 };
 
 //Config; override in your app to customise
