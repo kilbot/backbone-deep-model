@@ -186,7 +186,7 @@ describe('DeepModel', function() {
       });
       expect(model.attributes.arr).to.deep.equal([ 'val1', 'val2' ]);
 
-      model.set({ arr: [ 'val3' ] });
+      model.set( model.parse({ arr: [ 'val3' ] }) );
       expect(model.attributes.arr).to.deep.equal([ 'val3' ]);
     });
 

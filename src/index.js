@@ -189,17 +189,6 @@ var DeepModel = Backbone.Model.extend({
 		// Check for changes of `id`.
 		if (this.idAttribute in attrs) this.id = attrs[this.idAttribute];
 
-    // If attr is array and not of same size, clear first
-    for (attr in attrs) {
-      if(
-        _.isArray(this.attributes[attr]) &&
-        _.isArray(attrs[attr]) &&
-        this.attributes[attr].length > attrs[attr].length
-      ){
-        this.attributes[attr] = undefined;
-      }
-    }
-
 		//<custom code>
 		attrs = objToPaths(attrs);
 		//</custom code>
@@ -331,7 +320,17 @@ var DeepModel = Backbone.Model.extend({
 	// `"change"` event.
 	previousAttributes: function() {
 		return merge({}, this._previousAttributes);
-	}
+	},
+
+  parse: function(resp){
+    var attr, attrs = objToPaths(resp);
+    for( attr in objToPaths(this.attributes) ){
+      if( attrs[attr] === undefined ){
+        this.set( attr, undefined, { unset: true } );
+      }
+    }
+    return resp;
+  }
 });
 
 //Config; override in your app to customise
